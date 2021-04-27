@@ -26,9 +26,8 @@ rdvDict = {"Month":"","Id":""}
 lRdv = []
 listId = []
 lValidId = []
-#checkbutonslist = []
-#listitem = 0
 firstRun = True
+found = False
 while repeat:
    # Creates a firefox handler
    firefoxOp = Options()
@@ -72,8 +71,12 @@ while repeat:
               # iterates all html tags found called labels 
               for element in labels :
                   # Match every label (it has the text that is needed) with the Id attribute
+                  if found :
+                     break
                   if element.get_attribute("for") == item :
                       # iterates the month available from current moment in the year
+                      if found :
+                          break
                       for month in lmonth :
                           # Is in the text is baturalization by decret and is in the following month from this current month
                           if "décret" in element.text and month in element.text :
@@ -81,9 +84,14 @@ while repeat:
                               rdvDict["Month"] = month
                               rdvDict["Id"] = item
                               # If there are many options a list is created
-                              lRdv.append(rdvDict)
-                          
+                              lRdv.append(rdvDict.copy())
+                              found = True
+                              break
+              found = False            
+
           print("First Run")
+          print(str(len(lRdv)))
+          #print(lRdv)
           firstRun = False
       else :
           # Once the list of RDV is done, we iterate over it
