@@ -39,7 +39,7 @@ while repeat:
    if numBadRequest > 10 :
       numBadRequest = 0
       print ("long wait cuz bad request")
-      time.sleep(300)
+      time.sleep(150)
    # try/exception when timeouts or bad gateaway
    try:
       # Set wait 10 seconds to find the labels below
@@ -53,7 +53,7 @@ while repeat:
       # Click validate button
       browser.execute_script("arguments[0].click();",submit)
       # Set wait 15 seconds to find the labels below
-      wait = WebDriverWait( browser, 15 )
+      wait = WebDriverWait( browser, 10 )
       # Wait until the element appears
       wait.until(EC.element_to_be_clickable((By.NAME, "planning")))
 
@@ -105,7 +105,7 @@ while repeat:
           # Text when no RDV to assign
           textfromweb="Il n'existe plus de plage horaire libre pour votre demande de rendez-vous. Veuillez recommencer ultérieurement."
           
-          wait = WebDriverWait( browser, 15 )
+          wait = WebDriverWait( browser, 10 )
           wait.until(EC.element_to_be_clickable((By.NAME, 'finishButton')))
 
            # Label which contains the message
@@ -115,7 +115,7 @@ while repeat:
              print ("Jodido")
              browser.close()
              # Wait 20s before trying again
-             time.sleep(20)
+             time.sleep(15)
              # Url to send message with telegram bot: needs bot <token> chat <ID> and <message>
              # The messages is updated with the month
              url = "https://api.telegram.org/bot1777404851:AAFmqLmRJkeEmmO9uXzERhm6h_LaQz9r9-k/sendMessage?chat_id=-503195108&text="+"No hay cita en: "+lRdv[listitem]["Month"]
